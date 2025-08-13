@@ -5,9 +5,10 @@ const nextBtn = document.getElementById('nextBtn');
 let images = [];
 let currentIndex = 0;
 let slides = [];
+let photoPaths =
 
 // Fetch images.json
-fetch('/images.json')
+fetch('./Properties/images.json')
     .then(response => {
         if (!response.ok) {
             throw new Error('Failed to load images.json');
