@@ -8,7 +8,7 @@ let slides = [];
 let photoPaths =
 
 // Fetch images.json
-fetch('./Properties/images.json')
+    fetch('/Properties/images.json')
     .then(response => {
         if (!response.ok) {
             throw new Error('Failed to load images.json');

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using System;
 using System.IO;
 using System.Text;
 
@@ -13,7 +14,7 @@ namespace LifeSpot
         /// </summary>
         public static void MapCss(this IEndpointRouteBuilder builder)
         {
-            var cssFiles = new[] { "index.css" };
+            var cssFiles = new[] { "index.css" , "slider.css" };
 
             foreach (var fileName in cssFiles)
             {
@@ -108,18 +109,18 @@ namespace LifeSpot
             }
         }
 
-        // Mapping Json
+        // Mapping images
         public static void MapImages(this IEndpointRouteBuilder builder)
         {
-            var jpegFiles = Directory.GetFiles(Directory.GetCurrentDirectory() + "/Images");
+            var jpegFiles = new[] { "photo1.jpg", "photo2.jpeg", "photo3.jpg", "photo4.jpeg", };
 
             foreach (var fileName in jpegFiles)
             {
                 builder.MapGet($"/Images/{fileName}", async context =>
                 {
-                    var jsPath = Path.Combine(Directory.GetCurrentDirectory(), "Images", fileName);
-                    var js = await File.ReadAllTextAsync(jsPath);
-                    await context.Response.WriteAsync(js);
+                    var imgPath = Path.Combine(Directory.GetCurrentDirectory(), "Images", fileName);
+                    var photo = await File.ReadAllTextAsync(imgPath);
+                    await context.Response.WriteAsync(photo);
                 });
             }
         }
