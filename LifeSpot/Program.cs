@@ -10,12 +10,13 @@ namespace LifeSpot
     {
         public static void Main(string[] args)
         {
-            // Выводим информационное сообщение 
+            // Info message
             PrintMessage( (() => Info("Запускаем приложение")) );
             
             CreateHostBuilder(args).Build().Run();
         }
 
+        // Hosting this app, now it`s default
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });

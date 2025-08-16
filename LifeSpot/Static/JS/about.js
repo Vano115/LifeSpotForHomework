@@ -1,35 +1,35 @@
 ﻿/*
-* Запросим пользовательский ввод
-* и сохраним отзыв в объект
+* Request user input and save this text in object
 * 
 * */
 function getReview() {
-    // Создадим объект
+    // Create object
     let review = {}
     
-    // Сохраним свойство имени
+    // Save name of property
     review["userName"] = prompt("Как вас зовут ?")
     if(review["userName"] == null){
         return
     }
     
-    // Сохраним текст отзыва
+    // Save text of review
     review["comment"] = prompt("Напишите свой отзыв")
     if(review["comment"] == null){
         return
     }
     
-    // Сохраним текущее время
+    // Save current time
     review["date"] = new Date().toLocaleString()
     
-    // Добавим на страницу
+    // Add on the page
     writeReview(review)
 }
 
 /*
-* Запишем отзыв на страницу 
+* Write review on the page
 * 
 * */
+// Created new <div> with the review
 const writeReview = review => {
     document.getElementsByClassName('reviews')[0].innerHTML += '    <div class="review-text">\n' +
         `<p> <i> <b>${review['userName']}</b>  ${review['date']}</i></p>` +

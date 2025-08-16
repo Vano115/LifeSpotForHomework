@@ -6,15 +6,15 @@ namespace LifeSpot
     public class Logger
     {
         /// <summary>
-        /// Этот метод в качестве параметра получает ссылку на делегат Action, с помощью которого можно
-        /// вызывать разные методы внутри
+        /// This method gets a reference to the Action delegate 
+        /// as a parameter, which can be used to call different methods inside
         /// </summary>
         public static void PrintMessage(Action logMode)
         {
             // Lambdas.Test();
             
             Console.OutputEncoding = Encoding.Unicode;
-            // Запускаем логирование
+            // Start logger
             Console.WriteLine("Логгер запущен");
             
             // Вызываем делегат

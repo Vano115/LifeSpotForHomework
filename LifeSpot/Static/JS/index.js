@@ -1,23 +1,23 @@
 ﻿/*
-* Сессия теперь создается в общей области видимости.
-* Будет "захватываться" тремя функциями
+* The session is now created in the shared viewport.
+* Will be captured by three functions
 * 
 * */ 
 let session =  new Map();
 
 /*
-* Сохранение данных сессии сразу при заходе пользователя на страницу
+* Save session immidiately
 * 
 * */
 function handleSession(){
-    // Сохраним время начала сессии
+    // Save time starting session
     session.set("startDate", new Date().toLocaleString())
-    // Сохраним UserAgent
+    // Save UserAgent
     session.set("userAgent", window.navigator.userAgent)
 }
 
 /*
-* Проверка возраста пользователя
+* Check user age
 * 
 * */
 function checkAge(){
@@ -34,7 +34,7 @@ function checkAge(){
 
 
 /*
-* Вывод данных сессии в консоль
+* Output in console
 * 
 * */
 let sessionLog = function () {
@@ -44,8 +44,8 @@ let sessionLog = function () {
 }
 
 /*
-* Функция для фильтраци контента
-* Будет вызываться благодаря атрибуту oninput на index.html
+* A function for filtering content
+* Will be called due to the attribute oninput на index.html
 * 
 * */
 

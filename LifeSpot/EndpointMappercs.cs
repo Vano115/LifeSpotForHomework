@@ -10,7 +10,7 @@ namespace LifeSpot
     public static class EndpointMapper
     {
         /// <summary>
-        ///  Маппинг CSS-файлов
+        ///  Mapping CSS files
         /// </summary>
         public static void MapCss(this IEndpointRouteBuilder builder)
         {
@@ -28,7 +28,7 @@ namespace LifeSpot
         }
 
         /// <summary>
-        ///  Маппинг JS
+        ///  Mapping JS files
         /// </summary>
         public static void MapJs(this IEndpointRouteBuilder builder)
         {
@@ -45,7 +45,7 @@ namespace LifeSpot
             }
         }
         /// <summary>
-        ///  Маппинг Html-страниц
+        ///  Mapping HTML pages
         /// </summary>
         public static void MapHtml(this IEndpointRouteBuilder builder)
         {
@@ -58,7 +58,7 @@ namespace LifeSpot
                 var viewPath = Path.Combine(Directory.GetCurrentDirectory(), "Views", "index.html");
                 var viewText = await File.ReadAllTextAsync(viewPath);
 
-                // Загружаем шаблон страницы, вставляя в него элементы
+                // Download page and include needed elements
                 var html = new StringBuilder(await File.ReadAllTextAsync(viewPath))
                     .Replace("<!--SIDEBAR-->", sideBarHtml)
                     .Replace("<!--FOOTER-->", footerHtml);
@@ -70,7 +70,7 @@ namespace LifeSpot
             {
                 var viewPath = Path.Combine(Directory.GetCurrentDirectory(), "Views", "testing.html");
 
-                // Загружаем шаблон страницы, вставляя в него элементы
+                // Download page and include needed elements
                 var html = new StringBuilder(await File.ReadAllTextAsync(viewPath))
                     .Replace("<!--SIDEBAR-->", sideBarHtml)
                     .Replace("<!--FOOTER-->", footerHtml);
@@ -80,14 +80,18 @@ namespace LifeSpot
 
             builder.MapGet("/about", async context =>
             {
+                // Full path of this file
                 var viewPath = Path.Combine(Directory.GetCurrentDirectory(), "Views", "about.html");
 
-                // Загружаем шаблон страницы, вставляя в него элементы
+                // Download page and include needed elements
                 var html = new StringBuilder(await File.ReadAllTextAsync(viewPath))
+                
+                // Now file about.html have text from sidebar.html, footer.html, slider.html
                     .Replace("<!--SIDEBAR-->", sideBarHtml)
                     .Replace("<!--FOOTER-->", footerHtml)
                     .Replace("<!--SLIDER-->", sliderHtml);
 
+                // Write all file as a text to response body
                 await context.Response.WriteAsync(html.ToString());
             });
         }
@@ -96,14 +100,21 @@ namespace LifeSpot
         // Mapping Json
         public static void MapJson(this IEndpointRouteBuilder builder)
         {
+            // Array of names of jsons
             var jsFiles = new[] { "images.json" };
 
             foreach (var fileName in jsFiles)
             {
+                // Mapped each json files for app
                 builder.MapGet($"/Properties/{fileName}", async context =>
                 {
+                    // Full path of this file
                     var jsPath = Path.Combine(Directory.GetCurrentDirectory(), "Properties", fileName);
+
+                    // Reads it as a text
                     var js = await File.ReadAllTextAsync(jsPath);
+
+                    // Write all file as a text to response body
                     await context.Response.WriteAsync(js);
                 });
             }
@@ -112,14 +123,22 @@ namespace LifeSpot
         // Mapping images
         public static void MapImages(this IEndpointRouteBuilder builder)
         {
+            // Array of names of photos
             var jpegFiles = new[] { "photo1.jpg", "photo2.jpeg", "photo3.jpg", "photo4.jpeg", };
 
             foreach (var fileName in jpegFiles)
             {
+                // Mapped each photo for app
                 builder.MapGet($"/Images/{fileName}", async context =>
                 {
+                    // Photo path
                     var imgPath = Path.Combine(Directory.GetCurrentDirectory(), "Images", fileName);
+
+                    // File.ReadAllBytesAsync(imgPath) - it`s way to read file
+                    // If i use ReadAllTextAsync, it`ll be use how text, but now it reads as array of bytes
                     var photo = await File.ReadAllBytesAsync(imgPath);
+
+                    // Response.Body.WriteAsync letting download files with Stream
                     await context.Response.Body.WriteAsync(photo);
                 });
             }
